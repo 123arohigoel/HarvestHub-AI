@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HarvestHub - Farm Management &amp; Crop Planning System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fa-solid fa-seedling"></i>
+          <span>Harvest<strong>Hub</strong></span>
+        </div>
+        <button class="icon-btn mobile-close" id="sidebarCloseBtn">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="farm-selector">
+        <label for="currentFarmSelect">ACTIVE FARM</label>
+        <div class="select-wrapper">
+          <i class="fa-solid fa-location-dot"></i>
+          <select id="currentFarmSelect">
+            <option value="f1">Green Valley Estate (240 Ac)</option>
+            <option value="f2">Highland Organic Valley (110 Ac)</option>
+            <option value="f3">Riverbend Agro Orchards (350 Ac)</option>
+          </select>
+        </div>
+      </div>
+      <nav class="sidebar-menu">
+        <button class="nav-item active" data-target="dashboard-section">
+          <i class="fa-solid fa-chart-pie"></i><span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-target="farm-profile-section">
+          <i class="fa-solid fa-map-location-dot"></i><span>Farm Profile</span>
+        </button>
+        <button class="nav-item" data-target="users-section">
+          <i class="fa-solid fa-users-gear"></i><span>Users &amp; Roles</span>
+        </button>
+        <button class="nav-item" data-target="crop-catalog-section">
+          <i class="fa-solid fa-wheat-awn"></i><span>Crop Catalog</span>
+        </button>
+        <button class="nav-item" data-target="crop-rotation-section">
+          <i class="fa-solid fa-arrows-rotate"></i><span>Crop Rotation</span>
+        </button>
+        <button class="nav-item" data-target="field-ops-section">
+          <i class="fa-solid fa-list-check"></i><span>Field Operations</span>
+        </button>
+        <button class="nav-item" data-target="workforce-section">
+          <i class="fa-solid fa-person-digging"></i><span>Workforce</span>
+        </button>
+        <button class="nav-item" data-target="resources-costs-section">
+          <i class="fa-solid fa-warehouse"></i><span>Resources &amp; Costs</span>
+        </button>
+        <button class="nav-item" data-target="harvest-section">
+          <i class="fa-solid fa-basket-shopping"></i><span>Harvest Analytics</span>
+        </button>
+        <button class="nav-item" data-target="machinery-section">
+          <i class="fa-solid fa-tractor"></i><span>Machinery &amp; Fleet</span>
+        </button>
+        <button class="nav-item" data-target="maintenance-section">
+          <i class="fa-solid fa-wrench"></i><span>Maintenance Tickets</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="system-status">
+          <span class="status-indicator-dot online"></span>
+          <span>SaaS Telemetry: Live</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Navbar -->
+      <header class="top-nav">
+        <div class="top-nav-left">
+          <button class="icon-btn mobile-menu-btn" id="mobileMenuToggle">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="global-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search fields, crops, machinery, tickets...">
+          </div>
+        </div>
+        <div class="top-nav-right">
+          <div class="notifications-wrapper">
+            <button class="icon-btn" id="notificationsBtn">
+              <i class="fa-regular fa-bell"></i>
+              <span class="badge-count" id="notifCount">3</span>
+            </button>
+            <div class="notifications-dropdown" id="notificationsDropdown">
+              <div class="dropdown-header">
+                <strong>Notifications</strong>
+                <span class="clear-all" id="clearNotifsBtn">Clear All</span>
+              </div>
+              <div class="notification-list" id="notificationList"></div>
+            </div>
+          </div>
+          <div class="user-profile-menu">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="avatar">
+            <div class="profile-info">
+              <span class="user-name">Elena Rostova</span>
+              <span class="user-role">Lead Agronomist</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Sections Container -->
+      <div class="content-container">
+        <!-- SECTION: DASHBOARD -->
+        <section id="dashboard-section" class="app-section active">
+          <div class="section-header">
+            <div>
+              <h2>Operational Overview</h2>
+              <p class="subtitle">Real-time agronomic and operational KPIs for active parcel</p>
+            </div>
+            <div class="section-actions">
+              <span class="timestamp-badge"><i class="fa-regular fa-clock"></i> Updated just now</span>
+            </div>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-icon icon-green"><i class="fa-solid fa-vector-square"></i></div>
+              <div class="kpi-details">
+                <span class="kpi-label">Total Farm Area</span>
+                <h3 class="kpi-value" id="kpiTotalArea">240.0 Ac</h3>
+                <span class="kpi-subtext">8 Active parcels</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-sage"><i class="fa-solid fa-seedling"></i></div>
+              <div class="kpi-details">
+                <span class="kpi-label">Active Field Zones</span>
+                <h3 class="kpi-value" id="kpiActiveFields">6/8</h3>
+                <span class="kpi-subtext">75% parcel utilization</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-terracotta"><i class="fa-solid fa-list-check"></i></div>
+              <div class="kpi-details">
+                <span class="kpi-label">Pending Field Tasks</span>
+                <h3 class="kpi-value" id="kpiPendingTasks">5 Tasks</h3>
+                <span class="kpi-subtext text-warning" id="kpiDelayedTasks">1 Delayed</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-gold"><i class="fa-solid fa-receipt"></i></div>
+              <div class="kpi-details">
+                <span class="kpi-label">Seasonal Cost</span>
+                <h3 class="kpi-value" id="kpiTotalCost">$0</h3>
+                <span class="kpi-subtext">Inputs &amp; Labor to date</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-forest"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+              <div class="kpi-details">
+                <span class="kpi-label">Harvest Revenue</span>
+                <h3 class="kpi-value" id="kpiTotalRevenue">$0</h3>
+                <span class="kpi-subtext text-success" id="kpiProfitMargin">+0% Margin</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <div class="kpi-details">
+                <span class="kpi-label">Fleet Service Alerts</span>
+                <h3 class="kpi-value" id="kpiFleetAlerts">0 Alerts</h3>
+                <span class="kpi-subtext text-danger" id="kpiMaintenanceSummary">Needs review</span>
+              </div>
+            </div>
+          </div>
+          <div class="dashboard-grid">
+            <div class="card col-span-8">
+              <div class="card-header">
+                <h3>Crop Distribution &amp; Acreage Allocation</h3>
+              </div>
+              <div class="card-body chart-wrapper">
+                <canvas id="cropDistributionChart"></canvas>
+              </div>
+            </div>
+            <div class="card col-span-4">
+              <div class="card-header">
+                <h3>Rotation Health Check</h3>
+              </div>
+              <div class="card-body" id="dashboardRotationHealth"></div>
+            </div>
+            <div class="card col-span-6">
+              <div class="card-header flex-between">
+                <h3>Upcoming Field Operations</h3>
+                <button class="btn-text view-all-btn" data-target="field-ops-section">View All</button>
+              </div>
+              <div class="card-body">
+                <div class="widget-list" id="dashboardTasksList"></div>
+              </div>
+            </div>
+            <div class="card col-span-6">
+              <div class="card-header flex-between">
+                <h3>Low Inventory Warnings</h3>
+                <button class="btn-text view-all-btn" data-target="resources-costs-section">Inventory</button>
+              </div>
+              <div class="card-body">
+                <div class="widget-list" id="dashboardInventoryList"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: FARM PROFILE -->
+        <section id="farm-profile-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>Farm Profile &amp; Soil Ecology</h2>
+              <p class="subtitle">Cadastral layout, geological attributes, and soil health metrics</p>
+            </div>
+          </div>
+          <div class="profile-overview-card card">
+            <div class="farm-meta-grid">
+              <div class="meta-item">
+                <span class="meta-label">Farm Designation</span>
+                <strong class="meta-value">Green Valley Estate</strong>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Principal Operator</span>
+                <strong class="meta-value">Harrison Vance</strong>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Total Acreage</span>
+                <strong class="meta-value">240.0 Acres</strong>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Field Units</span>
+                <strong class="meta-value">8 Subdivided Plots</strong>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Geographic Coordinates</span>
+                <strong class="meta-value">43°12′N, 89°23'W</strong>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Average Base pH</span>
+                <strong class="meta-value">6.5 (Optimal Neutral)</strong>
+              </div>
+            </div>
+          </div>
+          <h3 class="section-subheading">Cadastral Field Layout &amp; Zone Mapping</h3>
+          <div class="cadastral-grid" id="cadastralGrid"></div>
+          <h3 class="section-subheading">Soil Profile Analytics</h3>
+          <div class="soil-cards-grid" id="soilCardsContainer"></div>
+        </section>
+
+        <!-- SECTION: USERS & ROLES -->
+        <section id="users-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>User Management &amp; Access Roles</h2>
+              <p class="subtitle">System permissions, agronomic credentials, and field assignments</p>
+            </div>
+            <button class="btn btn-primary" id="openAddUserModalBtn">
+              <i class="fa-solid fa-user-plus"></i> Add User
+            </button>
+          </div>
+          <div class="table-card card">
+            <div class="table-filters">
+              <div class="filter-group">
+                <input type="text" id="userSearchInput" placeholder="Search by name or email...">
+              </div>
+              <div class="filter-group">
+                <select id="userRoleFilter">
+                  <option value="All">All Roles</option>
+                  <option value="Farm Owner">Farm Owner</option>
+                  <option value="Agronomist">Agronomist</option>
+                  <option value="Field Supervisor">Field Supervisor</option>
+                  <option value="Equipment Operator">Equipment Operator</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Assigned Fields</th>
+                    <th>Status</th>
+                    <th>Last Active</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: CROP CATALOG & LIVE PRODUCTS -->
+        <section id="crop-catalog-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>Botanical Crop Catalog</h2>
+              <p class="subtitle">Agronomic thresholds, maturity periods, and thermal requirements</p>
+            </div>
+          </div>
+          <div class="crop-catalog-grid" id="cropCatalogContainer"></div>
+
+          <!-- Live HarvestHub Marketplace Inventory connected to Spring Boot & MySQL -->
+          <div class="section-header" style="margin-top: 2.5rem; margin-bottom: 1rem;">
+            <div>
+              <h2>Available Farm Inventory (Live Database)</h2>
+              <p class="subtitle">Real-time inventory and pricing synchronized directly with your MySQL database</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary" id="refreshProductsBtn">
+                <i class="fa-solid fa-arrows-rotate"></i> Refresh
+              </button>
+              <button class="btn btn-primary" id="openAddProductModalBtn">
+                <i class="fa-solid fa-plus"></i> Add Product
+              </button>
+            </div>
+          </div>
+          <div id="product-container" class="crop-catalog-grid"></div>
+        </section>
+
+        <!-- SECTION: CROP ROTATION PLANNER -->
+        <section id="crop-rotation-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>Interactive Crop Rotation Planner</h2>
+              <p class="subtitle">Automated botanical family isolation and nutrient balancing engine</p>
+            </div>
+          </div>
+          <div class="card table-card">
+            <div class="card-header-note">
+              <i class="fa-solid fa-circle-info"></i>
+              <span><strong>Agronomic Rules Enforced:</strong> Consecutive botanical family planting triggers isolation warnings. Continuous heavy nutrient demand prompts legume rotation advice.</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Field Identifier</th>
+                    <th>Previous Crop</th>
+                    <th>Current Crop</th>
+                    <th>Planned Crop</th>
+                    <th>Season</th>
+                    <th>Rotation Health Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="rotationTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: FIELD OPERATIONS -->
+        <section id="field-ops-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>Field Operations &amp; Task Scheduling</h2>
+              <p class="subtitle">Track basal fertilizer runs, tillage, targeted spraying, and harvests</p>
+            </div>
+            <button class="btn btn-primary" id="openAddTaskModalBtn">
+              <i class="fa-solid fa-plus"></i> Add Operation
+            </button>
+          </div>
+          <div class="table-card card">
+            <div class="table-filters">
+              <div class="filter-group">
+                <input type="text" id="taskSearchInput" placeholder="Search tasks...">
+              </div>
+              <div class="filter-group">
+                <select id="taskStatusFilter">
+                  <option value="All">All Statuses</option>
+                  <option value="Scheduled">Scheduled</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Delayed">Delayed</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <select id="taskPriorityFilter">
+                  <option value="All">All Priorities</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Task Name</th>
+                    <th>Field / Zone</th>
+                    <th>Assigned Crew</th>
+                    <th>Start Date</th>
+                    <th>Due Date</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="tasksTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: WORKFORCE -->
+        <section id="workforce-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>Workforce Roster &amp; Shift Allocations</h2>
+              <p class="subtitle">Field crew attendance, shift scheduling, and logged labor hours</p>
+            </div>
+          </div>
+          <div class="table-card card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Worker Name</th>
+                    <th>Operational Role</th>
+                    <th>Active Assignment</th>
+                    <th>Shift</th>
+                    <th>Daily Attendance</th>
+                    <th>Hours Logged (Week)</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="workforceTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: RESOURCES & COSTS -->
+        <section id="resources-costs-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>Resource Inventory &amp; Operational Costs</h2>
+              <p class="subtitle">Inputs inventory, wage logs, and field-level cost allocations</p>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-header flex-between">
+              <h3>Consumables &amp; Agrochemical Inventory</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Stock Item</th>
+                    <th>Category</th>
+                    <th>Available Quantity</th>
+                    <th>Min. Reorder Threshold</th>
+                    <th>Unit Cost</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="inventoryTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="dashboard-grid">
+            <div class="card col-span-7">
+              <div class="card-header">
+                <h3>Labor &amp; Wage Ledger</h3>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Worker</th>
+                      <th>Date</th>
+                      <th>Field</th>
+                      <th>Hours</th>
+                      <th>Wage Rate</th>
+                      <th>Total Wage</th>
+                    </tr>
+                  </thead>
+                  <tbody id="wagesTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card col-span-5">
+              <div class="card-header">
+                <h3>Seasonal Cost by Field Unit</h3>
+              </div>
+              <div class="card-body">
+                <div class="cost-summary-list" id="fieldCostBreakdownList"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: HARVEST ANALYTICS -->
+        <section id="harvest-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>Harvest Analytics &amp; Crop Profitability</h2>
+              <p class="subtitle">Crop yields, grades, revenue, input costs, and calculated net profits</p>
+            </div>
+          </div>
+          <div class="card table-card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Crop</th>
+                    <th>Field Lot</th>
+                    <th>Harvest Quantity</th>
+                    <th>Produce Grade</th>
+                    <th>Revenue</th>
+                    <th>Total Cost</th>
+                    <th>Net Profit / Margin</th>
+                  </tr>
+                </thead>
+                <tbody id="harvestTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: MACHINERY -->
+        <section id="machinery-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>Agricultural Fleet Registry</h2>
+              <p class="subtitle">Machinery telemetry, engine hours, and status triggers</p>
+            </div>
+          </div>
+          <div class="machinery-cards-grid" id="machineryCardsContainer"></div>
+        </section>
+
+        <!-- SECTION: MAINTENANCE TICKETS -->
+        <section id="maintenance-section" class="app-section">
+          <div class="section-header">
+            <div>
+              <h2>Equipment Maintenance Tickets</h2>
+              <p class="subtitle">Preventative service intervals and diagnostic repair logs</p>
+            </div>
+            <button class="btn btn-primary" id="openAddTicketModalBtn">
+              <i class="fa-solid fa-wrench"></i> Create Ticket
+            </button>
+          </div>
+          <div class="table-card card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Machine</th>
+                    <th>Service Type</th>
+                    <th>Engine Hours</th>
+                    <th>Scheduled Date</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="maintenanceTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL: ADD / EDIT USER -->
+  <div class="modal-overlay" id="userModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="userModalTitle">Add New User</h3>
+        <button class="icon-btn modal-close" data-modal="userModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="userForm">
+        <input type="hidden" id="userIdInput">
+        <div class="form-group">
+          <label for="userNameInput">Full Name *</label>
+          <input type="text" id="userNameInput" required placeholder="e.g. Samuel Green">
+        </div>
+        <div class="form-group">
+          <label for="userEmailInput">Email Address *</label>
+          <input type="email" id="userEmailInput" required placeholder="name@harvesthub.farm">
+        </div>
+        <div class="form-group">
+          <label for="userRoleInput">System Role *</label>
+          <select id="userRoleInput" required>
+            <option value="Farm Owner">Farm Owner</option>
+            <option value="Agronomist">Agronomist</option>
+            <option value="Field Supervisor">Field Supervisor</option>
+            <option value="Equipment Operator">Equipment Operator</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="userFieldsInput">Assigned Field Lots</label>
+          <input type="text" id="userFieldsInput" placeholder="e.g. Field A-1, Field B-2">
+        </div>
+        <div class="form-group">
+          <label for="userStatusInput">Account Status</label>
+          <select id="userStatusInput">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary modal-close" data-modal="userModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save User Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT TASK -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="taskModalTitle">Schedule Field Operation</h3>
+        <button class="icon-btn modal-close" data-modal="taskModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="taskForm">
+        <input type="hidden" id="taskIdInput">
+        <div class="form-group">
+          <label for="taskNameInput">Operation Name *</label>
+          <input type="text" id="taskNameInput" required placeholder="e.g. Targeted Fungicide Spraying">
+        </div>
+        <div class="form-group">
+          <label for="taskFieldInput">Field Unit *</label>
+          <select id="taskFieldInput" required></select>
+        </div>
+        <div class="form-group">
+          <label for="taskWorkerInput">Assigned Crew / Lead *</label>
+          <input type="text" id="taskWorkerInput" required placeholder="e.g. Mateo Ramos (Crew A)">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="taskStartDateInput">Start Date *</label>
+            <input type="date" id="taskStartDateInput" required>
+          </div>
+          <div class="form-group col-6">
+            <label for="taskDueDateInput">Due Date *</label>
+            <input type="date" id="taskDueDateInput" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="taskPriorityInput">Priority</label>
+            <select id="taskPriorityInput">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Critical">Critical</option>
+            </select>
+          </div>
+          <div class="form-group col-6">
+            <label for="taskStatusInput">Current Status</label>
+            <select id="taskStatusInput">
+              <option value="Scheduled">Scheduled</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Delayed">Delayed</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="taskProgressInput">Progress Completion (<span id="progressValueLabel">0%</span>)</label>
+          <input type="range" id="taskProgressInput" min="0" max="100" step="5" value="0">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary modal-close" data-modal="taskModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Operation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD MAINTENANCE TICKET -->
+  <div class="modal-overlay" id="ticketModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Create Maintenance Ticket</h3>
+        <button class="icon-btn modal-close" data-modal="ticketModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="ticketForm">
+        <div class="form-group">
+          <label for="ticketMachineInput">Equipment *</label>
+          <select id="ticketMachineInput" required></select>
+        </div>
+        <div class="form-group">
+          <label for="ticketTypeInput">Service Type *</label>
+          <input type="text" id="ticketTypeInput" required placeholder="e.g. 250hr Hydraulic Fluid & Filter Change">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="ticketHoursInput">Current Hours</label>
+            <input type="number" id="ticketHoursInput" required>
+          </div>
+          <div class="form-group col-6">
+            <label for="ticketDateInput">Scheduled Date</label>
+            <input type="date" id="ticketDateInput" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ticketPriorityInput">Priority</label>
+          <select id="ticketPriorityInput">
+            <option value="Routine">Routine</option>
+            <option value="Urgent">Urgent</option>
+            <option value="Emergency">Emergency</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary modal-close" data-modal="ticketModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Generate Ticket</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT CROP ROTATION -->
+  <div class="modal-overlay" id="rotationModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Plan Crop Rotation</h3>
+        <button class="icon-btn modal-close" data-modal="rotationModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="rotationForm">
+        <input type="hidden" id="rotationFieldId">
+        <div class="form-group">
+          <label>Field Identifier</label>
+          <p id="rotationFieldNameDisplay" class="form-display-text"></p>
+        </div>
+        <div class="form-group">
+          <label for="rotationCurrentCrop">Current Crop</label>
+          <select id="rotationCurrentCrop" required></select>
+        </div>
+        <div class="form-group">
+          <label for="rotationPlannedCrop">Planned Next Crop</label>
+          <select id="rotationPlannedCrop" required></select>
+        </div>
+        <div class="form-group">
+          <label for="rotationSeason">Target Season</label>
+          <select id="rotationSeason">
+            <option value="Spring 2026">Spring 2026</option>
+            <option value="Summer 2026">Summer 2026</option>
+            <option value="Autumn 2026">Autumn 2026</option>
+            <option value="Winter 2026-27">Winter 2026-27</option>
+          </select>
+        </div>
+        <div id="rotationValidationPreview" class="rotation-preview-box"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary modal-close" data-modal="rotationModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Rotation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT PRODUCT -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="productModalTitle">Add New Product</h3>
+        <button class="icon-btn modal-close" data-modal="productModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="productForm">
+        <input type="hidden" id="productIdInput">
+        <div class="form-group">
+          <label for="productNameInput">Product Name *</label>
+          <input type="text" id="productNameInput" required placeholder="e.g. Organic Barley">
+        </div>
+        <div class="form-group">
+          <label for="productCategoryInput">Category *</label>
+          <input type="text" id="productCategoryInput" required placeholder="e.g. Grains, Vegetables, Seeds">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="productPriceInput">Price ($ / ₹) *</label>
+            <input type="number" step="0.01" id="productPriceInput" required placeholder="0.00">
+          </div>
+          <div class="form-group col-6">
+            <label for="productQuantityInput">Quantity *</label>
+            <input type="number" id="productQuantityInput" required placeholder="0">
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary modal-close" data-modal="productModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

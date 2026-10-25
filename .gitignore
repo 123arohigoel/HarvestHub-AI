@@ -1,0 +1,17 @@
+# Backend / Maven & Java
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+*.class
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Secrets / Config
+*.env
+application-local.properties
