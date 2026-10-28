@@ -1,7 +1,7 @@
 /* ==========================================================================
    HARVESTHUB - COMPLETE FRONTEND CONTROLLER & REVENUE LOGIC
    ========================================================================== */
-const PRODUCT_API_URL = "http://localhost:8080/api/products";
+const PRODUCT_API_URL = "https://harvesthub-ai.onrender.com/api/products";
    document.addEventListener('DOMContentLoaded', () => {
   // --- MOCK DATABASE STATE ---
   const state = {
