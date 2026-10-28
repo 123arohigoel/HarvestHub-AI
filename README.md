@@ -1,14 +1,20 @@
 # 🌱 HarvestHub AI
 
-> An intelligent, full-stack web platform for agricultural management, crop planning, and farm productivity tracking.
+> An intelligent, full-stack web platform for agricultural management, crop planning, and live farm inventory tracking.
+
+[![Live Demo](https://img.shields.io/badge/Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://harvesthub-ai-frontend-ntywxvg0w-arohi-goel.vercel.app)
+[![Backend](https://img.shields.io/badge/API-Render-46E3B7?style=for-the-badge&logo=render)](https://harvesthub-ai.onrender.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 ---
 
 ## 📌 Table of Contents
 - [About the Project](#-about-the-project)
+- [Live Links](#-live-links)
 - [Key Features](#-key-features)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
+- [API Endpoints](#-api-endpoints)
 - [Getting Started](#-getting-started)
   - [Prerequisites](#prerequisites)
   - [1. Backend Setup](#1-backend-setup)
@@ -24,20 +30,31 @@
 
 ---
 
+## 🚀 Live Links
+
+- **Frontend Application:** [https://harvesthub-ai-frontend-ntywxvg0w-arohi-goel.vercel.app](https://harvesthub-ai-frontend-ntywxvg0w-arohi-goel.vercel.app)
+- **Backend API Base URL:** [https://harvesthub-ai.onrender.com/api](https://harvesthub-ai.onrender.com/api)
+
+> **Note:** The backend is deployed on Render's free tier. If the instance has been inactive, the initial API call may experience a cold start (~50–90 seconds) while the container boots up.
+
+---
+
 ## ✨ Key Features
 
-- **Crop & Product Management:** Track inventory, field inputs, and crop lifecycles via RESTful endpoints.
-- **Resource Tracking:** Manage farm schedules and field logs in a unified dashboard.
-- **Responsive UI:** Clean and modern interface accessible across mobile and desktop browsers.
-- **Robust Architecture:** Clean layered Spring Boot architecture (Controllers, Services, Repositories).
+- **Live Database Inventory Synchronization:** Direct integration between the front-end dashboard and a cloud MySQL database.
+- **Product & Crop CRUD Operations:** Add, view, edit, and delete farm inventory items with real-time feedback.
+- **Agronomic Planning Modules:** Built-in panels for monitoring growth stages, optimal sowing windows, and thermal limits.
+- **Decoupled Architecture:** Clean RESTful communication with configured CORS policies between Vercel and Render.
+- **Responsive UI:** Clean, intuitive dashboard interface accessible across mobile and desktop browsers.
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Backend:** Java 17+, Spring Boot, Spring Data JPA, REST APIs, Maven
+- **Backend:** Java 17+, Spring Boot, Spring Data JPA, Hibernate, REST APIs, Maven
 - **Database:** MySQL
-- **Frontend:** HTML5, CSS3, JavaScript (Fetch API)
+- **Frontend:** HTML5, CSS3, JavaScript (Fetch API, Async/Await)
+- **Deployment & Cloud:** Vercel (Frontend), Render (Backend)
 - **Version Control:** Git, GitHub
 
 ---
